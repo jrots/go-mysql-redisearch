@@ -9,14 +9,11 @@ import (
 	"github.com/ngaut/log"
 	"github.com/jrots/go-mysql/canal"
 	"github.com/RedisLabs/redisearch-go/redisearch"
-	"github.com/jrots/go-mysql-redisearch/etc"
+	"github.com/jrots/go-mysql-redisearch/config"
 
 	"golang.org/x/net/context"
 )
 
-// In Elasticsearch, river is a pluggable service within Elasticsearch pulling data then indexing it into Elasticsearch.
-// We use this definition here too, although it may not run within Elasticsearch.
-// Maybe later I can implement a acutal river in Elasticsearch, but I must learn java. :-)
 type River struct {
 	c *Config
 
@@ -73,7 +70,7 @@ func NewRiver(c *Config) (*River, error) {
 	r.red.Drop()
 
 	if _, err := r.red.Info(); err != nil {
-		etc.Setup(r.red)
+		config.Setup(r.red)
 	}
 
 

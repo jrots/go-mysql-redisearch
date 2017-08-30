@@ -1,0 +1,27 @@
+my_addr = "localhost"
+my_user = "root"
+my_pass = "pass"
+my_charset = "utf8"
+red_addr = "localhost:6379"
+red_index = "jaymetest"
+es_user = ""
+es_pass = ""
+data_dir = "./var/prod"
+stat_addr = "127.0.0.1:12800"
+server_id = 1001
+flavor = "mysql"
+mysqldump = "mysqldump"
+bulk_size = 10000
+binlogname = "binlog"
+skip_master_data = true
+[[source]]
+schema = "database"
+tables = ["SOME_TABLE"]
+
+[[rule]]
+schema = "db"
+table = "SOME_TABLE"
+id = ["userid"]
+filter = ["some_field"]
+[rule.field]
+	some_field = "sf"
