@@ -18,16 +18,12 @@ import (
 )
 
 const (
-	syncInsertDoc = iota
-	syncDeleteDoc
-	syncUpdateDoc
-)
-
-const (
 	fieldTypeList = "list"
 	fieldTypeGeoLat = "geo_lat"
 	fieldTypeGeoLon = "geo_lon"
 	fieldTypeNumericBool = "numeric_bool"
+	fieldTypeNumericDate = "numeric_date"
+	fieldTypeNumericEnum = "numeric_enum"
 
 )
 
@@ -389,6 +385,17 @@ func (r *River) makeInsertReqData(req *redisearch.Document, rule *Rule, values [
 					} else {
 						req.Set(fieldName, v)
 					}
+				} else if fieldType == fieldTypeNumericDate {
+					if str, ok := v.(string); ok {
+						req.Set(fieldName,
+							strings.Replace(
+								strings.Replace(
+									strings.Replace(str, ":", "", 0),
+									"-", "", 0),
+							" ", "", 0))
+					}
+				} else if fieldType == fieldTypeNumericEnum {
+
 				} else if fieldType == fieldTypeNumericBool {
 					boolVal, ok := v.(int64)
 					req.Set(fieldName,0)
@@ -455,6 +462,13 @@ func (r *River) makeUpdateReqData(req *redisearch.Document, rule *Rule,
 					if ok && boolVal > 0 {
 						req.Set(fieldName, 1)
 					}
+				} else if fieldType == fieldTypeNumericDate {
+					req.Set(fieldName,
+						strings.Replace(
+							strings.Replace(
+								strings.Replace(str, ":", "", 0),
+								"-", "", 0),
+						" ", "", 0))
 				} else if fieldType == fieldTypeGeoLat || fieldType == fieldTypeGeoLon {
 						if fieldType == fieldTypeGeoLat {
 							geoField["lat"] = v

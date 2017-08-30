@@ -12,7 +12,7 @@ import (
 	"github.com/ngaut/log"
 )
 
-var configFile = flag.String("config", "./etc/river.toml", "go-mysql-redisearch config file")
+var configFile = flag.String("config", "./config/river.toml", "go-mysql-redisearch config file")
 var my_addr = flag.String("my_addr", "", "MySQL addr")
 var my_user = flag.String("my_user", "", "MySQL user")
 var my_pass = flag.String("my_pass", "", "MySQL password")
